@@ -11,20 +11,43 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import NavBar from "../components/Navbar";
 import styles from "../styles/Home.module.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Home: NextPage = () => {
   const [allUsers, setAllUsers] = useState<any>({});
+  const [user, setUser] = useState<Object | null>(null);
 
   useEffect(() => {
+    console.log("fetch data start");
     const response = fetch("http://localhost:4000/all", {
       method: "GET",
       mode: "cors",
     });
-    response.then((data) =>
+    response.then((data) => {
+      console.log("fetch data end");
       data.json().then((d) => {
         setAllUsers(d);
-      })
-    );
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log("index me start");
+    const me = () => {
+      fetch("http://localhost:4000/me", {
+        method: "GET",
+        credentials: "include",
+        mode: "cors",
+      }).then((res) => {
+        if (res.ok) {
+          setUser(res.json());
+          console.log("index me end");
+        } else {
+          console.log("error");
+        }
+      });
+    };
+    me();
   }, []);
 
   return (
@@ -49,16 +72,15 @@ const Home: NextPage = () => {
                   <TableCell className={styles.boldtitle} align="right">
                     Deaths
                   </TableCell>
-                  <TableCell className={styles.boldtitle} align="right">
-                    K/D Ratio
-                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {Object.keys(allUsers).map((user) => (
                   <TableRow
                     key={allUsers[user].username}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
+                    }}
                   >
                     <TableCell component="th" scope="row">
                       {allUsers[user].username}
@@ -66,11 +88,6 @@ const Home: NextPage = () => {
                     <TableCell align="right">{allUsers[user].score}</TableCell>
                     <TableCell align="right">{allUsers[user].kills}</TableCell>
                     <TableCell align="right">{allUsers[user].deaths}</TableCell>
-                    <TableCell align="right">
-                      {Math.round(
-                        (allUsers[user].kills / allUsers[user].deaths) * 100
-                      ) / 100}
-                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

@@ -46,7 +46,7 @@ export default function Login() {
       data.json().then((d) => {
         if (data.status === 400) {
           setUser(null);
-          setErrorMsg("User does not Exist");
+          setErrorMsg("Username or Password is Incorrect");
         } else {
           router.push("/");
         }

@@ -6,9 +6,11 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function NavBar() {
-  const [user, setUser] = useState<Object | null>({});
+  const [user, setUser] = useState<Object | null>(null);
+  const router = useRouter();
 
   const logout = async () => {
     const response = await fetch("http://localhost:4000/logout", {
@@ -17,9 +19,12 @@ export default function NavBar() {
       mode: "cors",
     });
     setUser(null);
+    router.reload();
   };
 
   useEffect(() => {
+    console.log("navbar me start");
+
     const me = () => {
       fetch("http://localhost:4000/me", {
         method: "GET",
@@ -27,8 +32,8 @@ export default function NavBar() {
         mode: "cors",
       }).then((res) => {
         if (res.ok) {
-          console.log(res.json);
           setUser(res.json());
+          console.log("navbar me end");
         } else {
           console.log("error");
         }

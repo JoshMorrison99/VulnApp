@@ -9,8 +9,14 @@ export const Login = async (req: Request, res: Response) => {
     res.status(400);
     res.send({ message: "user does not exist" });
   } else {
-    req.session!.userId = user.id;
-    res.send(user);
+    // check if password is correct
+    if (req.body.password === user.password) {
+      req.session!.userId = user.id;
+      res.send(user);
+    } else {
+      res.status(400);
+      res.send({ message: "user password incorrect" });
+    }
   }
 };
 

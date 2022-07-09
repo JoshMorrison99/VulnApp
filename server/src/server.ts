@@ -125,66 +125,6 @@ const main = async () => {
     }
   });
 
-  const user7 = new User({
-    username: "Suspect77",
-    password: "d3226629-ace3-40cb-a172-25b36594fa85",
-    score: 357,
-    kills: 29,
-    deaths: 33,
-  });
-  user7.save((err: any) => {
-    if (err) {
-      console.log("err creating default user");
-    } else {
-      console.log("save successful");
-    }
-  });
-
-  const user8 = new User({
-    username: "Gigggatic",
-    password: "d3226629-ace3-40cb-a172-25b36594fa85",
-    score: 52553,
-    kills: 2229,
-    deaths: 2933,
-  });
-  user8.save((err: any) => {
-    if (err) {
-      console.log("err creating default user");
-    } else {
-      console.log("save successful");
-    }
-  });
-
-  const user9 = new User({
-    username: "Pandoro",
-    password: "d3226629-ace3-40cb-a172-25b36594fa85",
-    score: 16516,
-    kills: 984,
-    deaths: 773,
-  });
-  user9.save((err: any) => {
-    if (err) {
-      console.log("err creating default user");
-    } else {
-      console.log("save successful");
-    }
-  });
-
-  const user10 = new User({
-    username: "RIPieces",
-    password: "d3226629-ace3-40cb-a172-25b36594fa85",
-    score: 13094,
-    kills: 883,
-    deaths: 1930,
-  });
-  user10.save((err: any) => {
-    if (err) {
-      console.log("err creating default user");
-    } else {
-      console.log("save successful");
-    }
-  });
-
   // Cors Configuration
   app.use(
     cors({
